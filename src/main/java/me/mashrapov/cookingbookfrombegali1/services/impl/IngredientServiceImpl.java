@@ -22,4 +22,23 @@ public class IngredientServiceImpl implements IngredientService {
     public Ingredient getIngredientById(int id) {
         return ingredientMap.get(id);
     }
+
+    @Override
+    public Ingredient editIngredient(int id, Ingredient ingredient) {
+        if (ingredientMap.containsKey(id)) {
+            ingredientMap.put(id, ingredient);
+            return ingredient;
+        }
+        return null;
+    }
+
+    @Override
+    public boolean deleteIngredient(int id) {
+        if (ingredientMap.containsKey(id)) {
+            ingredientMap.remove(id);
+            return true;
+        }
+        return false;
+    }
+
 }

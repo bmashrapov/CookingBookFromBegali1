@@ -2,7 +2,6 @@ package me.mashrapov.cookingbookfrombegali1.controllers;
 
 import me.mashrapov.cookingbookfrombegali1.model.Recipe;
 import me.mashrapov.cookingbookfrombegali1.services.RecipeService;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,16 +17,33 @@ public class RecipeController {
     @PostMapping
     public ResponseEntity<Integer> addRecipe(@RequestBody Recipe recipe) {
         int id = recipeService.addRecipe(recipe);
-        return new ResponseEntity<>(id, HttpStatus.CREATED);
+        return ResponseEntity.ok().body(id);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Recipe> getRecipeById(@PathVariable int id) {
         Recipe recipe = recipeService.getRecipeById(id);
         if (recipe != null) {
-            return new ResponseEntity<>(recipe, HttpStatus.OK);
+            return ResponseEntity.ok(recipe);
         } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return ResponseEntity.notFound().build();
         }
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Recipe> editRecipe(@PathVariable int id, @RequestBody Recipe recipe) {
+        recipeService.getRecipeById(id);
+        if (recipe == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(recipe);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteRecipe(@PathVariable int id) {
+        if (recipeService.deleteRecipe(id)) {
+            return ResponseEntity.ok().build();
+        }
+        return ResponseEntity.notFound().build();
     }
 }
