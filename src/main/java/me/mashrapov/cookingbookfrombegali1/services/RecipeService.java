@@ -15,9 +15,9 @@ public interface RecipeService {
 
     List<Recipe> getAllRecipes();
 
-    List<Recipe> getRecipesByIngredientId(int id);
-
-    List<Recipe> getRecipesByIngredients(List<Integer> ingredientIds);
-
-    List<Recipe> getRecipesPaginated(int page, int size);
+//    List<Recipe> getRecipesByIngredientId(int id);
+//
+//    List<Recipe> getRecipesByIngredients(List<Integer> ingredientIds);
+//
+//    List<Recipe> getRecipesPaginated(int page, int size);
 }

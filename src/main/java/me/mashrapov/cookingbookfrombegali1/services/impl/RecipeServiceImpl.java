@@ -1,5 +1,5 @@
 package me.mashrapov.cookingbookfrombegali1.services.impl;
-import me.mashrapov.cookingbookfrombegali1.model.Ingredient;
+//import me.mashrapov.cookingbookfrombegali1.model.Ingredient;
 import me.mashrapov.cookingbookfrombegali1.model.Recipe;
 import me.mashrapov.cookingbookfrombegali1.services.RecipeService;
 import org.springframework.stereotype.Service;
@@ -45,41 +45,41 @@ public class RecipeServiceImpl implements RecipeService {
         return new ArrayList<>(recipeMap.values());
     }
     //++++++++++++++++++++++++++++++++++++++ additional tasks
-    @Override
-    public List<Recipe> getRecipesByIngredientId(int id) {
-        List<Recipe> recipesWithIngredient = new ArrayList<>();
-        for (Recipe recipe : recipeMap.values()) {
-            for (Ingredient ingredient : recipe.getIngredients()) {
-                if (ingredient.getId() == id) {
-                    recipesWithIngredient.add(recipe);
-                    break;
-                }
-            }
-        }
-        return recipesWithIngredient;
-    }
-
-    @Override
-    public List<Recipe> getRecipesByIngredients(List<Integer> ingredientIds) {
-        List<Recipe> recipesWithIngredients = new ArrayList<>();
-        for (Recipe recipe : recipeMap.values()) {
-            List<Integer> recipeIngredientIds = recipe.getIngredients().stream()
-                    .map(Ingredient::getId).toList();
-            if (new HashSet<>(recipeIngredientIds).containsAll(ingredientIds)) {
-                recipesWithIngredients.add(recipe);
-            }
-        }
-        return recipesWithIngredients;
-    }
-
-    @Override
-    public List<Recipe> getRecipesPaginated(int page, int size) {
-        List<Recipe> allRecipes = new ArrayList<>(recipeMap.values());
-        int startIndex = page * size;
-        if (startIndex >= allRecipes.size()) {
-            return Collections.emptyList();
-        }
-        int endIndex = Math.min(startIndex + size, allRecipes.size());
-        return allRecipes.subList(startIndex, endIndex);
-    }
+//    @Override
+//    public List<Recipe> getRecipesByIngredientId(int id) {
+//        List<Recipe> recipesWithIngredient = new ArrayList<>();
+//        for (Recipe recipe : recipeMap.values()) {
+//            for (Ingredient ingredient : recipe.getIngredients()) {
+//                if (ingredient.getId() == id) {
+//                    recipesWithIngredient.add(recipe);
+//                    break;
+//                }
+//            }
+//        }
+//        return recipesWithIngredient;
+//    }
+//
+//    @Override
+//    public List<Recipe> getRecipesByIngredients(List<Integer> ingredientIds) {
+//        List<Recipe> recipesWithIngredients = new ArrayList<>();
+//        for (Recipe recipe : recipeMap.values()) {
+//            List<Integer> recipeIngredientIds = recipe.getIngredients().stream()
+//                    .map(Ingredient::getId).toList();
+//            if (new HashSet<>(recipeIngredientIds).containsAll(ingredientIds)) {
+//                recipesWithIngredients.add(recipe);
+//            }
+//        }
+//        return recipesWithIngredients;
+//    }
+//
+//    @Override
+//    public List<Recipe> getRecipesPaginated(int page, int size) {
+//        List<Recipe> allRecipes = new ArrayList<>(recipeMap.values());
+//        int startIndex = page * size;
+//        if (startIndex >= allRecipes.size()) {
+//            return Collections.emptyList();
+//        }
+//        int endIndex = Math.min(startIndex + size, allRecipes.size());
+//        return allRecipes.subList(startIndex, endIndex);
+//    }
 }
