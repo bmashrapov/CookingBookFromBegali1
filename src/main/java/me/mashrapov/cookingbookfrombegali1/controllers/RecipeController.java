@@ -5,10 +5,13 @@ import me.mashrapov.cookingbookfrombegali1.services.RecipeService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @RestController
 @RequestMapping("/recipes")
 public class RecipeController {
-    private RecipeService recipeService;
+    private final RecipeService recipeService;
 
     public RecipeController(RecipeService recipeService) {
         this.recipeService = recipeService;
@@ -18,6 +21,12 @@ public class RecipeController {
     public ResponseEntity<Integer> addRecipe(@RequestBody Recipe recipe) {
         int id = recipeService.addRecipe(recipe);
         return ResponseEntity.ok().body(id);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<Recipe>> getAllRecipe() {
+        List<Recipe> recipeList = new ArrayList<>(recipeService.getAllRecipes());
+        return ResponseEntity.ok(recipeList);
     }
 
     @GetMapping("/{id}")
@@ -45,5 +54,23 @@ public class RecipeController {
             return ResponseEntity.ok().build();
         }
         return ResponseEntity.notFound().build();
+    }
+    //++++++++++++++++++++++++++++ additional tasks
+    @GetMapping("/byIngredient/{id}")
+    public ResponseEntity<List<Recipe>> getRecipesByIngredientId(@PathVariable int id) {
+        List<Recipe> recipeList = new ArrayList<>(recipeService.getRecipesByIngredientId(id));
+        return ResponseEntity.ok(recipeList);
+    }
+
+    @GetMapping("/byIngredients")
+    public ResponseEntity<List<Recipe>> getRecipesByIngredients(@RequestParam List<Integer> ingredientIds) {
+        List<Recipe> recipeList = new ArrayList<>(recipeService.getRecipesByIngredients(ingredientIds));
+        return ResponseEntity.ok(recipeList);
+    }
+
+    @GetMapping("/paginate")
+    public ResponseEntity<List<Recipe>> getRecipesPaginated(@RequestParam(defaultValue = "0") int page) {
+        List<Recipe> recipeList = new ArrayList<>(recipeService.getRecipesPaginated(page, 10));
+        return ResponseEntity.ok(recipeList);
     }
 }

@@ -5,11 +5,14 @@ import me.mashrapov.cookingbookfrombegali1.services.IngredientService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @RestController
 @RequestMapping("/ingredients")
 public class IngredientController {
 
-    private IngredientService ingredientService;
+    private final IngredientService ingredientService;
 
     public IngredientController(IngredientService ingredientService) {
         this.ingredientService = ingredientService;
@@ -19,7 +22,6 @@ public class IngredientController {
     public ResponseEntity<Integer> addIngredient(@RequestBody Ingredient ingredient) {
         int id = ingredientService.addIngredient(ingredient);
         return ResponseEntity.ok().body(id);
-//        return new ResponseEntity<>(id, HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
@@ -30,6 +32,12 @@ public class IngredientController {
         } else {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @GetMapping
+    public ResponseEntity<List<Ingredient>> getAllIngredients() {
+        List<Ingredient> ingredientList = new ArrayList<>(ingredientService.getAllIngredients());
+        return ResponseEntity.ok(ingredientList);
     }
 
     @PutMapping("/{id}")

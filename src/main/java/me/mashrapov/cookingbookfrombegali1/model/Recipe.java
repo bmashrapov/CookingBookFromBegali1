@@ -8,6 +8,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 public class Recipe {
+    private int id;
     private String nameOfRecipe;
     private int cookingTime;
     private List<Ingredient> ingredients;
